@@ -1,18 +1,38 @@
 {
   "name": "diff-map",
+  "description": "GitHub action that generates a diagram of the files changes in a pull request or push.",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
+  "author": "Oliver Sosa <oliver42999@gmail.com>",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "ncc build index.js"
-  },
-  "keywords": [],
-  "author": "Oliver Sosa <hanniballestat@gmail.com>",
   "license": "MIT",
+  "keywords": [
+    "github",
+    "actions",
+    "typescript",
+    "javascript",
+    "changed",
+    "modified",
+    "diff",
+    "files",
+    "diagram"
+  ],
+  "engines": {
+    "node": "^14.0.0"
+  },
+  "scripts": {
+    "build": "ncc build --source-map --license licenses.txt",
+    "cleanup": "rm -rf dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "@actions/core": "^1.10.0",
-    "@actions/github": "^5.1.1",
-    "@vercel/ncc": "^0.36.1"
+    "@actions/github": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "@vercel/ncc": "^0.36.1",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
   }
 }
