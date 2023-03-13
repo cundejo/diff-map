@@ -14,3 +14,7 @@ uses: cundejo/diff-map@v1.1
 git tag -a -m "MESSAGE" v1.1
 git push --follow-tags
 ```
+
+## Documentation
+
+- [Creating a JavaScript action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action)

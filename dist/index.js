@@ -9635,10 +9635,32 @@ async function run() {
         console.log("token", token);
         const octokit = (0, github_1.getOctokit)(token);
         // Debug log the payload.
-        core.debug(`Payload keys: ${Object.keys(github_1.context.payload)}`);
+        // core.debug(`Payload keys: ${Object.keys(context.payload)}`);
+        console.log("Payload keys:", Object.keys(github_1.context.payload));
         // Get event name.
         const eventName = github_1.context.eventName;
-        core.debug(`eventName: ${eventName}`);
+        console.log("eventName", eventName);
+        // Define the base and head commits to be extracted from the payload.
+        let base;
+        let head;
+        switch (eventName) {
+            case "pull_request":
+                base = github_1.context.payload.pull_request?.base?.sha;
+                head = github_1.context.payload.pull_request?.head?.sha;
+                break;
+            case "push":
+                base = github_1.context.payload.before;
+                head = github_1.context.payload.after;
+                break;
+            default:
+                core.setFailed(`This action only supports pull requests and pushes, ${github_1.context.eventName} events are not supported. 
+          Please submit an issue on this action's GitHub repo if you believe this is incorrect.`);
+        }
+        // Log the base and head commits
+        core.info(`Base commit: ${base}`);
+        console.log("Base commit:", base);
+        core.info(`Head commit: ${head}`);
+        console.log("Head commit:", head);
         //
         //
         // // `who-to-greet` input defined in action metadata file

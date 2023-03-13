@@ -21,7 +21,7 @@
     "node": "^14.0.0"
   },
   "scripts": {
-    "build": "ncc build src/index.ts --source-map --license licenses.txt",
+    "build": "pnpm cleanup && ncc build src/index.ts --source-map --license licenses.txt",
     "cleanup": "rm -rf dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

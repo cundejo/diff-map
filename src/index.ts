@@ -1,6 +1,8 @@
 import * as core from "@actions/core";
 import { context, getOctokit } from "@actions/github";
 
+type FileStatus = "added" | "modified" | "removed" | "renamed";
+
 async function run(): Promise<void> {
   try {
     console.log("STARTING action...");
@@ -10,11 +12,38 @@ async function run(): Promise<void> {
     const octokit = getOctokit(token);
 
     // Debug log the payload.
-    core.debug(`Payload keys: ${Object.keys(context.payload)}`);
+    // core.debug(`Payload keys: ${Object.keys(context.payload)}`);
+    console.log("Payload keys:", Object.keys(context.payload));
 
     // Get event name.
     const eventName = context.eventName;
-    core.debug(`eventName: ${eventName}`);
+    console.log("eventName", eventName);
+
+    // Define the base and head commits to be extracted from the payload.
+    let base: string | undefined;
+    let head: string | undefined;
+
+    switch (eventName) {
+      case "pull_request":
+        base = context.payload.pull_request?.base?.sha;
+        head = context.payload.pull_request?.head?.sha;
+        break;
+      case "push":
+        base = context.payload.before;
+        head = context.payload.after;
+        break;
+      default:
+        core.setFailed(
+          `This action only supports pull requests and pushes, ${context.eventName} events are not supported. 
+          Please submit an issue on this action's GitHub repo if you believe this is incorrect.`
+        );
+    }
+
+    // Log the base and head commits
+    core.info(`Base commit: ${base}`);
+    console.log("Base commit:", base);
+    core.info(`Head commit: ${head}`);
+    console.log("Head commit:", head);
 
     //
     //

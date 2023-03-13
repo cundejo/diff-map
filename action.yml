@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Diff Map'
+description: 'GitHub action that generates a diagram of the files changes in a pull request or push.'
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
