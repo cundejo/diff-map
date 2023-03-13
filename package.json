@@ -1,7 +1,7 @@
 {
   "name": "diff-map",
   "description": "GitHub action that generates a diagram of the files changes in a pull request or push.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "author": "Oliver Sosa <oliver42999@gmail.com>",
   "main": "dist/index.js",
