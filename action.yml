@@ -5,6 +5,12 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
+  token:
+    description: >
+      GitHub token for GitHub API requests.
+      Users shouldn't need to set this themselves.
+    required: true
+    default: ${{ github.token }}
 outputs:
   time: # id of output
     description: 'The time we greeted you'
