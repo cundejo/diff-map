@@ -9630,6 +9630,7 @@ const core = __importStar(__nccwpck_require__(7733));
 const github_1 = __nccwpck_require__(3695);
 async function run() {
     try {
+        console.log("STARTING action...");
         const token = core.getInput("token");
         console.log("token", token);
         const octokit = (0, github_1.getOctokit)(token);

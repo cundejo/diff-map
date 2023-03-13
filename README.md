@@ -1,25 +1,11 @@
-# Hello world javascript action
+# Diff map
 
-This action prints "Hello World" or "Hello" + the name of a person to greet to the log.
-
-## Inputs
-
-### `who-to-greet`
-
-**Required** The name of the person to greet. Default `"World"`.
-
-## Outputs
-
-### `time`
-
-The time we greeted you.
+This action generates a diagram of the files changes in a pull request or push.
 
 ## Example usage
 
 ```yaml
-uses: actions/hello-world-javascript-action@v1.1
-with:
-  who-to-greet: 'Mona the Octocat'
+uses: cundejo/diff-map@v1.1
 ```
 
 ## Publishing a new version
