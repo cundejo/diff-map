@@ -1,7 +1,7 @@
 {
   "name": "diff-map",
   "description": "GitHub action that generates a diagram of the files changes in a pull request or push.",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "private": true,
   "author": "Oliver Sosa <oliver42999@gmail.com>",
   "main": "dist/index.js",
@@ -21,7 +21,7 @@
     "node": "^14.0.0"
   },
   "scripts": {
-    "build": "ncc build --source-map --license licenses.txt",
+    "build": "ncc build src/index.ts --source-map --license licenses.txt",
     "cleanup": "rm -rf dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

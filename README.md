@@ -21,3 +21,10 @@ uses: actions/hello-world-javascript-action@v1.1
 with:
   who-to-greet: 'Mona the Octocat'
 ```
+
+## Publishing a new version
+
+```shell
+git tag -a -m "MESSAGE" v1.1
+git push --follow-tags
+```
