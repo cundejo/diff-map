@@ -5,10 +5,9 @@ type FileStatus = "added" | "modified" | "removed" | "renamed";
 
 async function run(): Promise<void> {
   try {
-    console.log("STARTING action...");
+    console.log("STARTING ACTION...");
 
     const token = core.getInput("token");
-    console.log("token", token);
     const octokit = getOctokit(token);
 
     // Debug log the payload.
@@ -41,9 +40,49 @@ async function run(): Promise<void> {
 
     // Log the base and head commits
     core.info(`Base commit: ${base}`);
-    console.log("Base commit:", base);
     core.info(`Head commit: ${head}`);
-    console.log("Head commit:", head);
+    console.log("context.repo.owner", context.repo.owner);
+    console.log("context.repo.repo", context.repo.repo);
+
+    // Ensure that the base and head properties are set on the payload.
+    if (!base || !head) {
+      core.setFailed(
+        `The base and head commits are missing from the payload for this ${context.eventName} event. ` +
+          "Please submit an issue on this action's GitHub repo."
+      );
+    }
+
+    // Use GitHub's compare two commits API.
+    // https://developer.github.com/v3/repos/commits/#compare-two-commits
+    const response = await octokit.request(
+      "GET /repos/{owner}/{repo}/compare/{basehead}",
+      {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        basehead: `${base}...${head}`,
+        headers: { "X-GitHub-Api-Version": "2022-11-28" },
+      }
+    );
+
+    // Ensure that the request was successful.
+    if (response.status !== 200) {
+      core.setFailed(
+        `The GitHub API for comparing the base and head commits for this ${context.eventName} event returned ${response.status}, expected 200. 
+          Please submit an issue on this action's GitHub repo.`
+      );
+    }
+
+    // Ensure that the head commit is ahead of the base commit.
+    if (response.data.status !== "ahead") {
+      core.setFailed(
+        `The head commit for this ${context.eventName} event is not ahead of the base commit. 
+        Please submit an issue on this action's GitHub repo.`
+      );
+    }
+
+    // Get the changed files from the response payload.
+    const files = response.data.files;
+    console.log("files", files);
 
     //
     //
